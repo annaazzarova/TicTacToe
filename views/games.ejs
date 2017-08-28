@@ -1,0 +1,33 @@
+<% layout('layout/page') -%>
+<% block('title', "Крестики-нолики") -%>
+
+<p class="lead">Здесь будет игра "Крестики-нолики".</p>
+
+<p>Список игр</p>
+
+
+<ul id="games">
+    <% games.forEach(function (game) {%>
+    <li><a href='/games/<%= game.gameToken%>'><%= game.gameToken%></a> Owner: <%= game.owner%> Opponent: <%= game.opponent%></li>
+    <% }) %>
+</ul>
+
+<button id="new-game" class="material-icons" aria-label="+">
+    <span class="mdc-fab__icon">+</span>
+</button>
+
+<script>
+    $("#new-game").click(function() {
+        var form = $(document.forms['new-game-form']);
+        $.ajax({
+            url: "/games/new",
+            method: "POST",
+            data: form.serialize(),
+            success: function(data) {
+                var gameToken = data['gameToken'];
+                window.location.href = "/games/"+gameToken;
+            }
+        });
+        return false;
+    });
+</script>

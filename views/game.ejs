@@ -1,0 +1,66 @@
+<% layout('layout/page') -%>
+<% block('title', "Крестики-нолики") -%>
+
+<p class="lead">Здесь будет игра "Крестики-нолики".</p>
+<p>Game Token:</p>
+<p id="gameToken"><%- game.gameToken -%></p>
+<p>Создатель игры:</p>
+<p id="owner"><%- game.owner -%></p>
+<p>Противник:</p>
+<p id="opponent"><%- game.opponent -%></p>
+<p>Поле игры:</p>
+<p id="game_field"><%- game.field -%></p>
+
+<% if ((user != game.owner) & (game.opponent == '')) { %>
+<button id="join" class="mdc-button mdc-button--accent">
+    Join
+</button>
+<% } %>
+
+<form class="form-horizontal step-form" name="step-form">
+    <input name="username" style="display: none;" value="<%- user.username -%>">
+    <input name="gameToken" style="display: none;" value="<%- game.gameToken -%>">
+    <input name="row" value="0">
+    <input name="colomn" value="0">
+
+    <button id="do_step" class="mdc-button mdc-button--accent">
+        Do step
+    </button>
+</form>
+<div id="content"></div>
+
+<script>
+    $("#join").click(function() {
+        var form = $(document.forms['step-form']);
+        $('.error', form).html('');
+        $.ajax({
+            url: "/games/join",
+            method: "POST",
+            cache: false,
+            data: form.serialize(),
+            success: function(data) {
+                $("#opponent").html(JSON.stringify(data.opponent));
+                $("#join").hide();
+            }
+        });
+        return false;
+    });
+
+    $("#do_step").click(function() {
+        var form = $(document.forms['step-form']);
+        $('.error', form).html('');
+        $.ajax({
+            url: "/games/do_step",
+            method: "POST",
+            cache: false,
+            data: form.serialize(),
+            success: function(data) {
+                $("#game_field").html(JSON.stringify(data.field));
+            }
+        });
+        return false;
+    });
+
+
+
+</script>

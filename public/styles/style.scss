@@ -1,0 +1,50 @@
+$font-stack: Times New Roman, sans-serif;
+$primary-color: #333;
+$bg-main: #f4f4f4;
+$bg-game: #828282;
+$text-grey: #DBDBDB;
+$text-dark-grey: #636363;
+$text-orange: #d07e56;
+$hr-color: #9B9B9B;
+
+body {
+  font: 100% $font-stack;
+  color: $primary-color;
+  background: $bg-main;
+
+}
+
+.game {
+  width: 110px;
+  height: 115px;
+  background-color: $bg-game;
+  position: relative;
+
+  .owner {
+    color: $text-grey;
+    text-align: left;
+    left: 0;
+  }
+
+  .opponent {
+    top: 50%;
+    position: absolute;
+    right: 0;
+    text-align: right;
+    color: $text-grey;
+  }
+
+  .game-duration {
+    color: $text-dark-grey;
+    position: absolute;
+    right: 0;
+    bottom: 0;
+  }
+
+  hr {
+    border: none;
+    background-color: $text-dark-grey;
+    height: 1px;
+    width: 90%;
+  }
+}
