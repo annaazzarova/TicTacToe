@@ -1,0 +1,18 @@
+<div class="login-form-container">
+    <p>Введите имя пользователя и пароль. <br/>Если такого пользователя нет - он будет создан.</p>
+
+    <form class="login-form" name="login-form">
+        <div class="help-block error"></div>
+        <div class="mdc-textfield textfield">
+            <label for="username">Username: </label>
+            <input type="text" name="username" class="mdc-textfield__input">
+        </div>
+        <div class="mdc-textfield textfield">
+            <label for="password">Password: </label>
+            <input type="password" name="password" class="mdc-textfield__input" required minlength=4>
+        </div>
+        <button type="submit" class="mdc-button mdc-button--accent login-button">
+            Login
+        </button>
+    </form>
+</div>

@@ -5,7 +5,7 @@ var gulp = require('gulp'),
 
 gulp.task('sass', function () {
     gulp.src([
-        './public/styles/style.scss'
+        './public/styles/*.scss'
     ])
         .pipe($.plumber({errorHandler: $.notify.onError()}))
         .pipe($.sass().on('error', $.sass.logError))
@@ -27,8 +27,8 @@ gulp.task('js', function() {
 });
 
 gulp.task('watch', function () {
-    gulp.watch(['/public/styles/**/*.scss'], ['sass']);
-    gulp.watch(['/public/javascripts/**/*.js'], ['js']);
+    gulp.watch(['./public/styles/**/*.scss'], ['sass']);
+    gulp.watch(['./public/javascripts/**/*.js'], ['js']);
 });
 
 gulp.task('default', ['watch']);

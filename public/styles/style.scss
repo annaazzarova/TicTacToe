@@ -1,50 +1,212 @@
-$font-stack: Times New Roman, sans-serif;
+@import "../vendor/bower_components/susy/sass/_susy.scss";
+@import "../vendor/bower_components/breakpoint-sass/stylesheets/breakpoint";
+@import "reset.scss";
+
+$font-family: 'Roboto Condensed', sans-serif;
 $primary-color: #333;
 $bg-main: #f4f4f4;
-$bg-game: #828282;
-$text-grey: #DBDBDB;
-$text-dark-grey: #636363;
-$text-orange: #d07e56;
+$game: #777777;
+$text-main: #fff;
+$grey: #777;
+$dark-grey: #404040;
+$light-grey: #E0E0E0;
+$orange: #EC7A05;
 $hr-color: #9B9B9B;
 
-body {
-  font: 100% $font-stack;
+
+// Susy
+$susy: (
+        columns: 12,
+        gutters: 1/3,
+        math: fluid,
+        gutter-position: inside,
+);
+
+@mixin respond-to($media) {
+  @if $media == handhelds {
+    @media only screen and (max-width: 479px) { @content; }
+  }
+  @else if $media == wide-handhelds {
+    @media only screen and (min-width: 480px) and (max-width: 767px) { @content; }
+  }
+  @else if $media == tablets {
+    @media only screen and (min-width: 768px) and (max-width: 959px) { @content; }
+  }
+}
+/*
+// Для телефонов
+@include respond-to(handhelds) { float: none; };
+// Для телефонов с широким экраном
+@include respond-to(wide-handhelds) { float: none; };
+// Для планшетов
+@include respond-to(tablets) { width: 240px; };
+*/
+
+body, html {
   color: $primary-color;
   background: $bg-main;
+  height: 100%;
+}
 
+.main-container {
+  font-family: $font-family;
+  font-size: 14px;
+  padding: 24px 24px 0 24px;
+  max-width: 800px;
+  height: 100%;
+  margin: auto;
+}
+
+header.mdc-toolbar {
+  background-color: #0a0a0a;
+}
+
+.mdc-toolbar__section--align-end {
+  margin-right: 24px;
+  .mdc-list-item {
+    padding-left: 12px;
+  }
+}
+
+.games-list {
+  @include span(12 no-gutters);
+}
+
+.game-container {
+  a:hover {
+    text-decoration: none;
+  }
+  color: $text-main;
+  @include span(2);
+  padding-bottom: 10px;
+
+  // Для телефонов
+  @include respond-to(handhelds) {
+    @include span(12);
+  };
+  // Для телефонов с широким экраном
+  @include respond-to(wide-handhelds) {
+    @include span(6);
+  };
+  // Для планшетов
+  @include respond-to(tablets) {
+    @include span(3);
+  };
 }
 
 .game {
-  width: 110px;
-  height: 115px;
-  background-color: $bg-game;
+  min-width: 110px;
+  height: 120px;
+  background-color: $game;
   position: relative;
+  color: inherit;
+  display: block;
+  padding: 5px 7px;
 
-  .owner {
-    color: $text-grey;
-    text-align: left;
-    left: 0;
+  &.playing {
+    background-color: lighten($game, 20%);
+    hr {
+      background-color: $dark-grey;
+    }
   }
 
-  .opponent {
-    top: 50%;
-    position: absolute;
-    right: 0;
-    text-align: right;
-    color: $text-grey;
+  &.done {
+    color: $dark-grey;
+    background-color: lighten($game, 40%);
+    .winner {
+      color: $orange;
+    }
+    hr {
+      background-color: $light-grey;
+    }
+  }
+}
+
+.user-container{
+  color: $text-main;
+  height: 42%;
+  display: block;
+  position: relative;
+  &.opponent {
+    padding-top: 5px;
+  }
+}
+
+.game-duration {
+  color: $dark-grey;
+  font-size: 12px;
+  display: block;
+  width: 100%;
+  position: relative;
+  text-align: right;
+}
+
+hr {
+  margin: 0;
+  height: 1px;
+  position: absolute;
+  width: 100%;
+  border: none;
+  bottom: 0;
+}
+
+button.new-game {
+  position: fixed;
+  right: 0;
+  bottom: 0;
+  margin: 5px;
+}
+
+.login-form-container {
+  padding: 10px 0;
+  max-width: 400px;
+  height: 100%;
+  margin: auto;
+
+  .login-form {
+    padding-top: 20px;
+
+    .error {
+      color: #9e0505;
+      font-size: larger;
+      margin-bottom: 10px;
+    }
+
+    .textfield {
+      display: block;
+      padding-bottom: 10px;
+    }
+
+    .login-button {
+      display: block;
+      margin: 0 auto;
+    }
   }
 
-  .game-duration {
-    color: $text-dark-grey;
-    position: absolute;
-    right: 0;
-    bottom: 0;
+}
+
+.username-container {
+  border-bottom: 1px solid $light-grey;
+  margin-bottom: 10px;
+  @include span(3);
+
+  // Для телефонов
+  @include respond-to(handhelds) {
+    @include span(12);
+  };
+  // Для телефонов с широким экраном
+  @include respond-to(wide-handhelds) {
+    @include span(6);
+  };
+  // Для планшетов
+  @include respond-to(tablets) {
+    @include span(6);
+  };
+}
+
+.game-field-container {
+  .field-row{
+    @include span(4);
   }
 
-  hr {
-    border: none;
-    background-color: $text-dark-grey;
-    height: 1px;
-    width: 90%;
-  }
 }

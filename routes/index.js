@@ -10,8 +10,12 @@ var size = 3;
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-    Game.find(function (err, games){
-        res.render('games', {games: games});
+    Game.find(function (err, games) {
+        if (!req.session.user) {
+            res.render('login');
+        } else {
+            res.render('games', {games: games});
+        }
     });
 });
 
@@ -39,7 +43,7 @@ router.post('/logout', require('./logout').post);
 //router.get('/games', checkAuth, require('./games').get);
 
 router.post('/games/new', function(req, res, next) {
-    var user = res.locals.user;
+    var user = req.body.username;
     Game.createGame(user, size, function (err, game){
         if (err) {
             if (err instanceof  HttpError) {

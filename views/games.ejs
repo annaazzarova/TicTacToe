@@ -1,33 +1,41 @@
 <% layout('layout/page') -%>
-<% block('title', "Крестики-нолики") -%>
+<% block('title', "Games") -%>
 
-<p class="lead">Здесь будет игра "Крестики-нолики".</p>
+<%if (!user) {%>
+    <%-partial('./partials/authForm')%>
+<%} else {%>
+    <div class="username-container">
+        <span><%=user.get('username')%></span>
+    </div>
 
-<p>Список игр</p>
+    <div class="games-list">
+        <% games.forEach(function (game) {%>
+        <div class="game-container">
+            <a href='/games/<%= game.gameToken%>' class="game <%=game.state%>">
+                <div class="user-container owner">
+                    <span class="owner"><%=game.owner%></span>
+                    <hr>
+                </div>
+                <div class="user-container opponent">
+                    <span class="opponent"><%=game.opponent%></span>
+                </div>
+                <div class="duration-container">
+                    <span class="game-duration">
+                        <%%>
+                        <%= (game.created).getHours()%> : <%= (game.created).getMinutes()%> : <%= (game.created).getSeconds()%>
+                    </span>
+                </div>
+            </a>
+        </div>
+        <% }) %>
+    </div>
+
+    <%-partial('./partials/newGameForm')%>
+    <button class="mdc-fab material-icons new-game" aria-label="Add">
+      <span class="mdc-fab__icon">
+        add
+      </span>
+    </button>
+<%}%>
 
 
-<ul id="games">
-    <% games.forEach(function (game) {%>
-    <li><a href='/games/<%= game.gameToken%>'><%= game.gameToken%></a> Owner: <%= game.owner%> Opponent: <%= game.opponent%></li>
-    <% }) %>
-</ul>
-
-<button id="new-game" class="material-icons" aria-label="+">
-    <span class="mdc-fab__icon">+</span>
-</button>
-
-<script>
-    $("#new-game").click(function() {
-        var form = $(document.forms['new-game-form']);
-        $.ajax({
-            url: "/games/new",
-            method: "POST",
-            data: form.serialize(),
-            success: function(data) {
-                var gameToken = data['gameToken'];
-                window.location.href = "/games/"+gameToken;
-            }
-        });
-        return false;
-    });
-</script>

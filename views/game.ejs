@@ -1,7 +1,33 @@
 <% layout('layout/page') -%>
-<% block('title', "Крестики-нолики") -%>
+<% block('title', "Tic Tac Toe") -%>
 
-<p class="lead">Здесь будет игра "Крестики-нолики".</p>
+<div class="game-users-container">
+    <div class="username-container">
+        <span><%=game.owner%></span>
+        <i class="fa fa-times" aria-hidden="true"></i>
+    </div>
+
+    <div class="username-container">
+        <i class="fa fa-circle-thin" aria-hidden="true"></i>
+        <span><%=game.opponent%></span>
+    </div>
+</div>
+
+<div class="game-field-container">
+    <% (game.field).forEach(function (row) {%>
+    <div class="field-row">
+        <% (row).forEach(function (item) {%>
+            <div class="field-item">
+                <%if (item == 1) {%>
+                    <i class="fa fa-times" aria-hidden="true"></i>
+                <%} else {%>
+                    <i class="fa fa-circle-thin" aria-hidden="true"></i>
+                <%}%>
+            </div>
+        <% }) %>
+    </div>
+    <% }) %>
+</div>
 <p>Game Token:</p>
 <p id="gameToken"><%- game.gameToken -%></p>
 <p>Создатель игры:</p>
@@ -29,38 +55,3 @@
 </form>
 <div id="content"></div>
 
-<script>
-    $("#join").click(function() {
-        var form = $(document.forms['step-form']);
-        $('.error', form).html('');
-        $.ajax({
-            url: "/games/join",
-            method: "POST",
-            cache: false,
-            data: form.serialize(),
-            success: function(data) {
-                $("#opponent").html(JSON.stringify(data.opponent));
-                $("#join").hide();
-            }
-        });
-        return false;
-    });
-
-    $("#do_step").click(function() {
-        var form = $(document.forms['step-form']);
-        $('.error', form).html('');
-        $.ajax({
-            url: "/games/do_step",
-            method: "POST",
-            cache: false,
-            data: form.serialize(),
-            success: function(data) {
-                $("#game_field").html(JSON.stringify(data.field));
-            }
-        });
-        return false;
-    });
-
-
-
-</script>

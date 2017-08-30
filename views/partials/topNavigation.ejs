@@ -1,17 +1,17 @@
-<nav class="navbar navbar-default" role="navigation">
-    <ul class="nav navbar-nav">
+<header class="mdc-toolbar mdc-toolbar--fixed">
+    <div class="mdc-toolbar__row">
+        <section class="mdc-toolbar__section mdc-toolbar__section--align-start">
+            <span class="mdc-toolbar__title">Tic Tac Toe</span>
+        </section>
         <% if (user) { %>
-        <li><a href="/games">Список игр</a></li>
-        <form class="hidden-form" name="new-game-form">
-            <input name="username" style="display: none;" value="<%=user.get('username')%>">
-            <input name="field-size" style="display: none;" value="3">
-        </form>
-        <li><a href="" onclick="$('<form method=POST action=/logout>').appendTo('body').submit();return false">Выйти</a></form></li>
+            <section class="mdc-toolbar__section mdc-toolbar__section--align-end">
+                <a class="mdc-list-item" href="/games">
+                    <i class="material-icons" aria-hidden="true">list</i>
+                </a>
+                <a class="mdc-list-item" href="" onclick="$('<form method=POST action=/logout>').appendTo('body').submit();return false">
+                    <i class="material-icons" aria-hidden="true">exit_to_app</i>
+                </a>
+            </section>
         <% } %>
-    </ul>
-</nav>
-
-
-
-
-
+    </div>
+</header>

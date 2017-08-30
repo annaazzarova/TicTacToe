@@ -1,32 +1,31 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title><%=blocks.title%></title>
-
     <!--<link rel="stylesheet" href="/vendor/bower_components/bootstrap/dist/css/bootstrap.css"/>-->
     <link rel="stylesheet" href="/css/style.css"/>
     <link rel="stylesheet" href="/vendor/node_modules/material-components-web/dist/material-components-web.css">
-    <script src="/vendor/bower_components/jquery/dist/jquery.js"></script>
-    <script src="/vendor/bower_components/jquery-ui/jquery-ui.js"></script>
-    <script src="/vendor/node_modules/material-components-web/dist/material-components-web.js"></script>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto+Mono">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto+Condensed">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.css">
 </head>
 <body>
-<header>
-    <%-blocks.header%>
-</header>
-<section class="container">
+<div class="main-container mdc-toolbar-fixed-adjust">
 
     <%-partial('../partials/topNavigation')%>
 
-    <h1><%=blocks.title%></h1>
-
     <%-body -%>
-    <%-partial('../partials/gameBlock')%>
-</section>
+
+</div>
+
 <footer>
     <%-blocks.footer%>
 </footer>
 </body>
-
-<script>mdc.autoInit()</script>
+<script src="/vendor/bower_components/jquery/dist/jquery.js"></script>
+<script src="/vendor/bower_components/jquery-ui/jquery-ui.js"></script>
+<script src="/vendor/node_modules/material-components-web/dist/material-components-web.js"></script>
+<script src="/js/min.js"></script>
 </html>

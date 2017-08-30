@@ -11,14 +11,15 @@ var schema = new Schema({
         unique: true,
         required: true
     },
-    /*owner: {            //создатель игры
+    owner: {            //создатель игры
         type: String,
         required: true
-    },*/
+    },
+    /*
     owner: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'user'
-    },
+    },*/
     opponent: {         //присоединенный игрок
         type: String,
         default: ''
@@ -99,7 +100,8 @@ schema.statics.join = function(opponent, gameToken, callback) {
         function(game, callback) {
             if (!game.opponent){
                 game.opponent = opponent;
-                Game.update({ gameToken: gameToken}, { opponent: game.opponent }, function(err, game) {
+                game.state = 'playing';
+                Game.update({ gameToken: gameToken}, { opponent: game.opponent, state: game.state }, function(err, game) {
                     if (err) throw err;
                 });
                 callback(null, game);
