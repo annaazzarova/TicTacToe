@@ -1,7 +1,10 @@
 <% layout('layout/page') -%>
 <% block('title', "Tic Tac Toe") -%>
-
-<div class="game-users-container">
+<%if (user.username != game.opponent || user.username != game.owner) {%>
+<div class="game-users-container disabled">
+    <%} else {%>
+    <div class="game-users-container">
+    <%}%>
     <%
         var owner, opponent = '';
         if (game.term == 'owner') { owner = 'active' } else { opponent = 'active'}%>

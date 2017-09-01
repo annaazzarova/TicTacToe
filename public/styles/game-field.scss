@@ -83,6 +83,10 @@ $border-color: #EEC352;
 }
 
 .game-field-container {
+  .diabled {
+    -webkit-filter: grayscale(100%);
+    filter: #808080;
+  }
 
   max-width: 290px;
   margin: auto;
@@ -142,10 +146,7 @@ $border-color: #EEC352;
     width: 40px;
     height: 40px;
   };
-  /*
-  -webkit-filter: grayscale(100%);
-  filter: #808080;
-*/
+
   &.val_O {
     background-image: url('../images/empty.png');
 
