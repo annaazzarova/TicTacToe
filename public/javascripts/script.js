@@ -2,36 +2,6 @@ $( document ).ready(function() {
     mdc.autoInit();
     mdc.registerInputFocusHandler;
 
-    $("#join").click(function () {
-        var form = $(document.forms['step-form']);
-        $('.error', form).html('');
-        $.ajax({
-            url: "/games/join",
-            method: "POST",
-            cache: false,
-            data: form.serialize(),
-            success: function (data) {
-                $("#opponent").html(JSON.stringify(data.opponent));
-                $("#join").hide();
-            }
-        });
-        return false;
-    });
-
-    $("#do_step").click(function () {
-        var form = $(document.forms['step-form']);
-        $('.error', form).html('');
-        $.ajax({
-            url: "/games/do_step",
-            method: "POST",
-            cache: false,
-            data: form.serialize(),
-            success: function (data) {
-                $("#game_field").html(JSON.stringify(data.field));
-            }
-        });
-        return false;
-    });
 
     $(".new-game").click(function () {
         var form = $(document.forms['new-game-form']);
@@ -68,3 +38,37 @@ $( document ).ready(function() {
         return false;
     });
 });
+
+function doStep(column, row, gameToken) {
+    console.log(column, row);
+    $.ajax({
+        url: "/games/do_step",
+        method: "POST",
+        cache: false,
+        data: {
+            row: row,
+            column: column,
+            gameToken: gameToken
+        },
+        success: function (data) {
+            //$("#game_field").html(JSON.stringify(data.field));
+        }
+    });
+    return false;
+}
+
+function join(username, gameToken) {
+    $.ajax({
+        url: "/games/join",
+        method: "POST",
+        cache: false,
+        data: {
+            username: username,
+            gameToken: gameToken
+        },
+        success: function (data) {
+            $("#join").hide();
+        }
+    });
+    return false;
+}

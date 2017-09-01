@@ -4,20 +4,28 @@
 <%if (!user) {%>
     <%-partial('./partials/authForm')%>
 <%} else {%>
-    <div class="username-container">
+    <div class="username-container-games">
         <span><%=user.get('username')%></span>
     </div>
 
     <div class="games-list">
         <% games.forEach(function (game) {%>
-        <div class="game-container">
+        <div class="game-preview-container">
             <a href='/games/<%= game.gameToken%>' class="game <%=game.state%>">
                 <div class="user-container owner">
-                    <span class="owner"><%=game.owner%></span>
+                    <%if (game.gameResult == 'owner') { %>
+                        <span class="owner winner"><%=game.owner%></span>
+                    <%} else {%>
+                        <span class="owner"><%=game.owner%></span>
+                    <%}%>
                     <hr>
                 </div>
                 <div class="user-container opponent">
-                    <span class="opponent"><%=game.opponent%></span>
+                    <%if (game.gameResult == 'opponent') { %>
+                        <span class="opponent winner"><%=game.opponent%></span>
+                    <%} else {%>
+                        <span class="opponent"><%=game.opponent%></span>
+                    <%}%>
                 </div>
                 <div class="duration-container">
                     <span class="game-duration">

@@ -1,0 +1,165 @@
+@import "../vendor/bower_components/susy/sass/_susy.scss";
+@import "../vendor/bower_components/breakpoint-sass/stylesheets/breakpoint";
+@import "reset.scss";
+
+$light-grey: #E0E0E0;
+$button-green: #039584;
+$border-color: #EEC352;
+@mixin respond-to($media) {
+  @if $media == handhelds {
+    @media only screen and (max-width: 414px) { @content; }
+  }
+  @else if $media == wide-handhelds {
+    @media only screen and (min-width: 415px) and (max-width: 767px) { @content; }
+  }
+  @else if $media == tablets {
+    @media only screen and (min-width: 768px) and (max-width: 959px) { @content; }
+  }
+}
+
+@mixin user-icon {
+  content: "";
+  width: 20px;
+  height: 20px;
+  display: inline-block;
+  position: relative;
+  background-size: cover;
+  background-repeat: no-repeat;
+  margin: 0 10px;
+}
+
+.username-container {
+  //border-bottom: 1px solid $light-grey;
+  margin-bottom: 10px;
+  display: inline-block;
+  padding-bottom: 5px;
+  @include respond-to(handhelds) {
+    display: block;
+  };
+
+  &.opponent {
+    float: right;
+    text-align: right;
+    @include respond-to(handhelds) {
+      margin: 20px 0 0 0;
+      float: none;
+      text-align: left;
+    }
+  }
+
+
+  .owner-name {
+    &.active {
+      border-bottom: 1px solid $light-grey;
+    }
+    &:after {
+      @include user-icon;
+      background-image: url(../images/close.png);
+    }
+
+  }
+
+  .opponent-name {
+    &.active {
+      border-bottom: 1px solid $light-grey;
+    }
+    &:before {
+      @include user-icon;
+      background-image: url(../images/empty.png);
+      @include respond-to(handhelds) {
+        background: none;
+        width: 0;
+        height: 0;
+        margin: 0;
+      }
+    }
+    @include respond-to(handhelds) {
+      &:after {
+        @include user-icon;
+        background-image: url(../images/empty.png);
+      }
+    }
+  }
+}
+
+.game-field-container {
+
+  max-width: 290px;
+  margin: auto;
+  padding: 15px 0;
+
+  @include respond-to(handhelds) {
+    max-width: 220px;
+  };
+
+  .game-field {
+    &:after {
+      content: "";
+      display: block;
+      clear: both;
+    }
+  }
+
+  .field-column{
+    border-right: 4px solid $border-color;
+    float: left;
+    &:last-of-type {
+      border: none;
+    }
+
+    .field-item {
+      border-bottom: 4px solid $border-color;
+      &:last-of-type {
+        border: none;
+      }
+    }
+  }
+
+  &:after {
+    content: "";
+    display: block;
+    clear: both;
+  }
+}
+
+.game-users-container {
+  &:after {
+    content: "";
+    display: block;
+    clear: both;
+  }
+}
+
+.cell {
+  width: 64px;
+  height: 64px;
+  margin: 15px;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+
+  @include respond-to(handhelds) {
+    width: 40px;
+    height: 40px;
+  };
+  /*
+  -webkit-filter: grayscale(100%);
+  filter: #808080;
+*/
+  &.val_O {
+    background-image: url('../images/empty.png');
+
+  }
+  &.val_X {
+    background-image: url('../images/close.png');
+  }
+}
+
+.game-duration-container, .button-surrender-container {
+  text-align: center;
+  margin: 30px 0;
+}
+
+button.surrender {
+  background-color: $button-green;
+}

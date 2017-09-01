@@ -2,56 +2,64 @@
 <% block('title', "Tic Tac Toe") -%>
 
 <div class="game-users-container">
-    <div class="username-container">
-        <span><%=game.owner%></span>
-        <i class="fa fa-times" aria-hidden="true"></i>
+    <%
+        var owner, opponent = '';
+        if (game.term == 'owner') { owner = 'active' } else { opponent = 'active'}%>
+
+    <div class="username-container owner">
+        <span class="owner-name <%=owner%>"><%=game.owner%></span>
     </div>
 
-    <div class="username-container">
-        <i class="fa fa-circle-thin" aria-hidden="true"></i>
-        <span><%=game.opponent%></span>
+    <%if (game.opponent) {%>
+    <div class="username-container opponent">
+        <span class="opponent-name <%=opponent%>"><%=game.opponent%></span>
     </div>
+    <%} else {%>
+        <% if ((user.username != game.owner)) { %>
+        <div class="username-container opponent">
+            <button onclick="join('<%-user.username%>', '<%-game.gameToken%>')" id="join" class="mdc-button mdc-button--raised join-game">
+                Join
+            </button>
+        </div>
+    <% } %>
+    <%}%>
 </div>
 
 <div class="game-field-container">
-    <% (game.field).forEach(function (row) {%>
-    <div class="field-row">
-        <% (row).forEach(function (item) {%>
+    <div class="game-field">
+        <%
+        var field = game.field;
+        for (i = 0; i < field.length; ++i){%>
+        <div class="field-column">
+            <%for (j = 0; j < field[i].length; ++j) {%>
             <div class="field-item">
-                <%if (item == 1) {%>
-                    <i class="fa fa-times" aria-hidden="true"></i>
+                <%if (field[j][i] == 'X' || field[j][i] == 'O') {%>
+                    <div class="cell val_<%-field[j][i]%> column_<%-i%> row_<%-j%>"></div>
                 <%} else {%>
-                    <i class="fa fa-circle-thin" aria-hidden="true"></i>
+                    <%if (game.state == 'playing' && (user.username == game.owner || user.username == game.opponent)) {%>
+                        <div class="cell val_? column_<%-i%> row_<%-j%>" onclick="doStep('<%-i%>', '<%-j%>', '<%-game.gameToken%>')"></div>
+                    <%} else {%>
+                        <div class="cell"></div>
+                    <%}%>
                 <%}%>
-            </div>
-        <% }) %>
-    </div>
-    <% }) %>
+                </div>
+            <%}%>
+        </div>
+        <%}%>
+
+
 </div>
-<p>Game Token:</p>
-<p id="gameToken"><%- game.gameToken -%></p>
-<p>Создатель игры:</p>
-<p id="owner"><%- game.owner -%></p>
-<p>Противник:</p>
-<p id="opponent"><%- game.opponent -%></p>
-<p>Поле игры:</p>
-<p id="game_field"><%- game.field -%></p>
 
-<% if ((user != game.owner) & (game.opponent == '')) { %>
-<button id="join" class="mdc-button mdc-button--accent">
-    Join
-</button>
-<% } %>
+<div class="game-duration-container">
+    <span class="game-duration-inside"><%= (game.created).getHours()%> : <%= (game.created).getMinutes()%> : <%= (game.created).getSeconds()%></span>
+</div>
 
-<form class="form-horizontal step-form" name="step-form">
-    <input name="username" style="display: none;" value="<%- user.username -%>">
-    <input name="gameToken" style="display: none;" value="<%- game.gameToken -%>">
-    <input name="row" value="0">
-    <input name="colomn" value="0">
 
-    <button id="do_step" class="mdc-button mdc-button--accent">
-        Do step
+<%if ((user.username == game.owner || user.username == game.opponent) && game.state == 'playing') {%>
+<div class="button-surrender-container">
+    <button id="surrender" class="mdc-button mdc-button--raised surrender">
+        Surrender
     </button>
-</form>
-<div id="content"></div>
+</div>
+<%}%>
 

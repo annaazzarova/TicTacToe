@@ -59,9 +59,9 @@ router.post('/games/new', function(req, res, next) {
 
 router.post('/games/do_step', function(req, res, next) {
     var row = req.body.row;
-    var colomn = req.body.colomn;
+    var column = req.body.column;
     var gameToken = req.body.gameToken;
-    Game.doStep(row, colomn, gameToken, function (err, game){
+    Game.doStep(column, row, gameToken, function (err, game){
         if (err) {
             if (err instanceof  HttpError) {
                 return next(new HttpError(403, err.message))

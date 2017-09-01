@@ -1,0 +1,31 @@
+@import "../vendor/bower_components/susy/sass/_susy.scss";
+@import "reset.scss";
+
+.login-form-container {
+  padding: 10px 0;
+  max-width: 400px;
+  height: 100%;
+  margin: auto;
+
+  .login-form {
+    padding-top: 20px;
+
+    .error {
+      color: #9e0505;
+      font-size: larger;
+      margin-bottom: 10px;
+    }
+
+    .textfield {
+      display: block;
+      padding-bottom: 10px;
+    }
+
+    .login-button {
+      display: block;
+      margin: 0 auto;
+    }
+  }
+
+}
+
